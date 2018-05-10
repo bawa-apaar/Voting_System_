@@ -1,0 +1,193 @@
+
+import java.sql.*;
+public class DemoDB
+{
+	int totrows;
+	int res;
+	Connection con;
+	PreparedStatement pr;
+	ResultSet rs;
+	DemoDB()
+	{
+		
+		try
+		{	
+			Class.forName("com.mysql.jdbc.Driver");
+			con=DriverManager.getConnection				        ("jdbc:mysql://localhost:3306/votingdb","root","root@123");
+		}
+		catch(Exception ee)
+		{
+			
+			System.out.println("nhi hoya connection exception"+ee);			
+		}				
+	}
+	public int insertDetails(String userstr,String passstr,String namestr,String agestr)
+	{
+		try
+		{	
+			pr=con.prepareStatement("insert into  registration1 (username,password,name,age) values(?,?,?,?)");
+			pr.setString(1,userstr);
+			pr.setString(2,passstr);
+			pr.setString(3,namestr);
+			pr.setString(4,agestr);
+			res=pr.executeUpdate();		
+		}
+		catch(Exception ee)
+		{
+			
+				System.out.println("insertion exception"+ee);			
+		}
+		return res;
+	}
+	public ResultSet checkDetails(String userstr)
+	{
+		try
+		{
+		
+			pr=con.prepareStatement("select * from  registration1 where username=?");
+			pr.setString(1,userstr);
+			rs=pr.executeQuery();	
+
+
+		}
+		catch(Exception ee)
+		{
+			
+				System.out.println("check exception"+ee);			
+		}
+		return rs;
+
+
+	}
+	public ResultSet selectUserDetails(String userstr,String passstr)
+	{
+		
+		try
+		{	
+			pr=con.prepareStatement("select * from  registration1 where username=? and password=?");
+			//System.out.println(userstr);
+			//System.out.println(passstr);
+			pr.setString(1,userstr);    	 
+			pr.setString(2,passstr);     
+			rs=pr.executeQuery();		
+		}
+		catch(Exception ee)
+		{
+			
+				System.out.println("check and login exception"+ee);			
+		}
+		return rs;
+
+	}
+	public int updateStatus(String userstr,String passstr,int status)
+	{
+		try
+		{
+			System.out.println(userstr);
+			pr=con.prepareStatement("update registration1 set status=? where username=? and password=?");
+			pr.setInt(1,status);
+			pr.setString(2,userstr);
+			pr.setString(3,passstr);
+			res=pr.executeUpdate();
+		}
+		catch(Exception ee)
+		{
+			System.out.println("status update exception"+ee);
+		}
+		return res;
+	
+	}
+	public int  bjpCount()
+	{
+		int i=1;
+	        try
+	        {
+		
+		pr=con.prepareStatement("SELECT COUNT(*) FROM REGISTRATION1 WHERE STATUS=?");
+		pr.setInt(1,i);
+		rs=pr.executeQuery();	
+		//System.out.println("ress="+rs);
+		if(rs.next())
+		{
+			totrows=rs.getInt(1);
+		}
+		
+	        }
+	        catch(Exception ee)
+	        {
+			System.out.println("bjpcount"+ee);
+	         }
+		return totrows;
+	}
+	public int  congCount()
+	{
+		int i=2;
+	        try
+	        {
+		
+		pr=con.prepareStatement("SELECT COUNT(*) FROM REGISTRATION1 WHERE STATUS=?");
+		pr.setInt(1,i);
+		rs=pr.executeQuery();	
+		//System.out.println("ress="+rs);
+		if(rs.next())
+		{
+			totrows=rs.getInt(1);
+		}
+		
+	        }
+	        catch(Exception ee)
+	        {
+			System.out.println("congcount"+ee);
+	         }
+		return totrows;
+	}
+	public int  aapCount()
+	{
+		int i=3;
+	        try
+	        {
+		
+		pr=con.prepareStatement("SELECT COUNT(*) FROM REGISTRATION1 WHERE STATUS=?");
+		pr.setInt(1,i);
+		rs=pr.executeQuery();	
+		//System.out.println("ress="+rs);
+		if(rs.next())
+		{
+			totrows=rs.getInt(1);
+		}
+		
+	        }
+	        catch(Exception ee)
+	        {
+			System.out.println("appCount exception"+ee);
+	         }
+		return totrows;
+	}
+	public int  bspCount()
+	{
+		int i=4;
+	        try
+	        {
+		
+		pr=con.prepareStatement("SELECT COUNT(*) FROM REGISTRATION1 WHERE STATUS=?");
+		pr.setInt(1,i);
+		rs=pr.executeQuery();	
+		//System.out.println("ress="+rs);
+		if(rs.next())
+		{
+			totrows=rs.getInt(1);
+		}
+		
+	        }
+	        catch(Exception ee)
+	        {
+			System.out.println(" bsp exception"+ee);
+	         }
+		return totrows;
+	}
+	public static void main(String []arg)
+	{
+		DemoDB obj=new DemoDB();
+	}
+	   
+}
