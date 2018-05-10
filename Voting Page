@@ -202,9 +202,8 @@ class Voting implements ActionListener
 				       catch(Exception er)
 			         {
 				
-				       }
-				     
-				  }
+				      
+				 }
 				 if(ee.getSource()==home)
 				   {
 					frame.dispose();
