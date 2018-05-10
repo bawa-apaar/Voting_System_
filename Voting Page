@@ -1,0 +1,226 @@
+import java.awt.*;  
+import java.awt.event.*;
+import javax.swing.*;  
+import java.sql.*;
+class Voting implements ActionListener
+{  
+			JFrame frame;  
+			MyPanel northpanel;
+			JPanel gridpanel,centerpanel,southpanel;
+			JLabel choice;
+			JTextField choicetext;
+			JButton center,north,south,bjp,congress,aap,bsp,confirm,result,home;
+			//JRadioButton bjp_radio,cong_radio,bsp_radio,aap_radio;
+			ButtonGroup group;
+			int temp=0;
+			ImageIcon bjp_img,congress_img,aap_img,bsp_img;
+			GridBagLayout gbl;
+			GridBagConstraints gbc;
+			String userstr,passstr;
+			int status,res;
+		
+			Voting(String userstr,String passstr)
+			{  
+   				 frame=new JFrame("voting");  
+				 this.userstr=userstr;
+				this.passstr=passstr;
+      				 northpanel=new MyPanel("evoting-logo.png",600,150);
+				 gridpanel=new JPanel();
+				centerpanel=new JPanel();
+				southpanel=new JPanel();
+				
+				//radiopanel=new JPanel();
+				 gbl=new GridBagLayout();
+				 gbc=new GridBagConstraints();
+				 bjp_img=new ImageIcon("bjp_img.jpg");
+   				 bjp=new JButton(bjp_img);  
+				  congress_img=new ImageIcon("congress_img.png");
+   				 congress=new JButton(congress_img);  
+				home=new JButton("GO HOME");
+				 aap_img=new ImageIcon("aap_img.jpg");
+   				 aap=new JButton(aap_img);  
+				 bsp_img=new ImageIcon("bsp_img.jpg");
+   				 bsp=new JButton(bsp_img);  
+				choice=new JLabel("YOUR CHOICE :");
+				choicetext=new JTextField(20);
+				confirm=new JButton("SUBMIT VOTE");
+				result=new JButton("VIEW RESULT");
+				/*bjp_radio=new JRadioButton("BJP");
+				cong_radio=new JRadioButton("Congress");
+				aap_radio=new JRadioButton("AAP");
+				bsp_radio=new JRadioButton("BSP");
+				group=new ButtonGroup();
+				group.add(bjp_radio);
+				group.add(cong_radio);
+				group.add(aap_radio);
+				group.add(bsp_radio);*/
+
+
+   				
+   				 
+      				northpanel.setPreferredSize(new Dimension(600,120));
+				centerpanel.setPreferredSize(new Dimension(600,400));
+			                gridpanel.setPreferredSize(new Dimension(600,400));
+				gridpanel.setBackground(new Color(203,140,100,140));
+				centerpanel.setBackground(new Color(203,140,100,140));
+				 choicetext.setPreferredSize(new Dimension(100,30));
+				// radiopanel.setPreferredSize(new Dimension(200,200));
+				 bjp.setPreferredSize(new Dimension(150,150));
+				 congress.setPreferredSize(new Dimension(150,150));
+				aap.setPreferredSize(new Dimension(150,150));
+				 bsp.setPreferredSize(new Dimension(150,150));
+				 confirm.setPreferredSize(new Dimension(300,20));	
+				home.setPreferredSize(new Dimension(150,20));	
+				result.setPreferredSize(new Dimension(150,20));	
+				 frame.add(northpanel,BorderLayout.NORTH);  
+   				frame.add(southpanel,BorderLayout.SOUTH);  
+  			                // frame.add(east,BorderLayout.EAST);  
+   				 //frame.add(west,BorderLayout.WEST);  
+				southpanel.add(result);
+				southpanel.add(home);
+				 gridpanel.setLayout(gbl);
+				//radiopanel.setLayout(gbl);
+				 gbc.gridx=0;
+				 gbc.gridy=0;
+				 gbc.weightx=0.1;
+				 gbc.weighty=0.1;
+				 gbc.gridwidth=2;
+				 gbl.setConstraints(bjp,gbc);
+				 
+				  gridpanel.add(bjp);
+				 gbc.gridx=2;
+				 gbc.gridy=0;
+				
+				 gbc.gridwidth=2;
+				  gbl.setConstraints(congress,gbc);
+				  gridpanel.add(congress);
+
+				 gbc.gridx=0;
+				 gbc.gridy=1;
+				
+				// gbc.weightx=0.0;
+				 //gbc.weighty=0.0;
+				 
+				 gbc.gridwidth=2;
+				
+				 gbl.setConstraints(aap,gbc);
+				
+				gridpanel.add(aap);
+				
+
+				 gbc.gridx=2;
+				 gbc.gridy=1;
+				 gbc.gridwidth=2;
+				 gbl.setConstraints(bsp,gbc);
+				  gridpanel.add(bsp);
+				  gbc.gridx=0;
+				  gbc.gridy=2;
+				  gbc.gridwidth=2;
+				  gbl.setConstraints(choice,gbc);
+				  gridpanel.add(choice);
+				  gbc.gridx=2;
+				  gbc.gridy=2;
+			 	  gbc.gridwidth=2;
+				  gridpanel.add(choicetext,gbc);
+				  gbc.gridx=1;
+				  gbc.gridy=3;
+				  gbc.gridwidth=3;
+				  gridpanel.add(confirm,gbc);
+				  centerpanel.add(gridpanel);
+				  //gridpanel.add(radiopanel);
+				
+				 
+   				 bjp.addActionListener(this);
+				
+				 congress.addActionListener(this);
+				 aap.addActionListener(this);
+				 bsp.addActionListener(this);
+				 confirm.addActionListener(this);
+				 result.addActionListener(this);
+			   	 home.addActionListener(this);
+			
+    				 frame.add(centerpanel,BorderLayout.CENTER);  
+     			                 frame.setSize(600,600);  
+    			                 frame.setVisible(true);  
+				 frame.setLocationRelativeTo(null);
+				
+			}  
+			public void actionPerformed(ActionEvent ee)
+			{
+				
+				 
+				if(ee.getSource()==bjp)
+				{
+					choicetext.setText("BHARTHIYA JANTA PARTY");			
+					status=1;
+					System.out.println("Status is:"+status);
+				}
+				if(ee.getSource()==congress)
+				{
+					choicetext.setText("CONGRESS PARTY");
+					status=2;
+				}
+				if(ee.getSource()==aap)
+				{
+					choicetext.setText("AAM AADMI PARTY");
+					status=3;
+				}
+				if(ee.getSource()==bsp)
+				{
+					choicetext.setText("BAHUJAN SMAJ PARTY");
+					status=4;
+				}
+				System.out.println(status);
+				if(ee.getSource()==confirm)
+				{
+				      
+					  bjp.setEnabled(false);
+					  congress.setEnabled(false);
+					  aap.setEnabled(false);
+					  bsp.setEnabled(false);
+					
+				       try
+				       {
+					
+					System.out.println("Status is:"+status);
+					DemoDB db=new DemoDB();
+					System.out.println(status);
+					System.out.println("update");
+					res=db.updateStatus(userstr,passstr,status);
+					System.out.println("update");
+					if(res>0)
+					{
+						JOptionPane.showMessageDialog(frame,"sucessfully voted!!!");
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(frame,"voted unsucs!!!");
+					}
+					
+				        
+				  }
+				       catch(Exception er)
+			         {
+				
+				       }
+				     
+				  }
+				 if(ee.getSource()==home)
+				   {
+					frame.dispose();
+					new home1();
+				   }
+				   if(ee.getSource()==result)
+				    {
+
+					 frame.dispose();
+					
+						
+					 Result m=new Result();
+    					 //m.iterate();    
+				                 
+				         }
+
+			}
+			
+}  
