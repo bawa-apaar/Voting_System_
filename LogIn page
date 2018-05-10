@@ -1,0 +1,144 @@
+import java.sql.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+class login1 extends JPanel implements ActionListener
+{	
+	JFrame frame;
+	MyPanel p;
+	JPanel p2;
+	JButton b1,b2;
+	JLabel label,l,la,lab;
+	Font font;
+	JTextField text;
+	JPasswordField password;
+	
+	public void actionPerformed(ActionEvent e)
+		{
+			
+			if(e.getSource()==b2)
+			{
+				ResultSet rss;
+				String userstr=text.getText();
+				String passstr=password.getText();
+				if(userstr.equals("") ||  passstr.equals(""))
+				{
+					JOptionPane.showMessageDialog(frame, "Enter Username or Password");
+
+				}
+				else	
+				{
+					
+						DemoDB db=new DemoDB();
+						rss=db.selectUserDetails(userstr,passstr);
+					try
+					{
+						
+						if(rss.next())
+						{
+							String user=rss.getString("username");
+							String pass=rss.getString("password");
+							
+														
+							if(rss.getInt("status")==0)
+							{
+								JOptionPane.showMessageDialog(frame, "Login succ");
+								frame.dispose();
+								new Voting(user,pass);
+							}
+						
+							else
+							{
+								JOptionPane.showMessageDialog(frame, "You Have Already Voted");
+							}
+						}
+						else
+						{
+							JOptionPane.showMessageDialog(frame, "Login Unsucc");
+							
+						 }
+					}
+					catch(Exception ee)
+					{
+
+					}
+				}
+				
+			}
+			if(e.getSource()==b1)
+			{
+				frame.dispose();	
+				new register1();
+				
+				
+			}
+			
+		}
+	login1()
+	{	
+		frame=new JFrame("login page");
+		p=new MyPanel("1.jpg",600,600);
+		p2=new JPanel();
+		label=new JLabel("ARE YOU READY TO VOTE ?");
+		lab=new JLabel("HAVE YOU REGISTERED YET?");
+		l=new JLabel("ENTER USERNAME:");
+		la=new JLabel("ENTER PASSWORD:");
+		text=new JTextField();
+		password=new JPasswordField();
+		b1=new JButton("REGISTER");
+		b2=new JButton("GO FOR VOTING");
+		
+		
+		
+		
+		
+		
+		frame.setLayout(null);
+		
+		
+		
+		frame.add(p2);
+		frame.add(p);
+		p.setBounds(0,0,600,600);
+		p2.setBounds(100,80,400,400);
+		
+		font=new Font("Times New Roman",Font.BOLD,20);
+		label.setFont(font);
+		lab.setFont(font);	
+		
+		p2.add(label);
+		p2.add(l);
+		p2.add(text);
+		p2.add(la);
+		p2.add(password);
+		p2.add(b2);
+		p2.add(lab);
+		p2.add(b1);
+		
+		p2.setBackground(new Color(203,140,100,140));
+		b1.setBackground(new Color(203,140,120));
+		b2.setBackground(new Color(203,140,120));
+		label.setPreferredSize(new Dimension(300,70));
+		text.setPreferredSize(new Dimension(340,30));
+		password.setPreferredSize(new Dimension(340,30));
+		lab.setPreferredSize(new Dimension(300,70));
+		b1.setPreferredSize(new Dimension(150,50));
+		b2.setPreferredSize(new Dimension(150,50));
+		
+			
+		
+		b2.addActionListener(this);
+		b1.addActionListener(this);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
+		frame.setSize(600,600);
+		frame.setVisible(true);	
+		frame.setLocationRelativeTo(null);
+		
+	}
+	public static void main(String args[])
+	{
+		new login1();
+	}
+}
+
