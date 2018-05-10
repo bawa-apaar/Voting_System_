@@ -1,0 +1,189 @@
+import javax.swing.*; 
+import java.awt.*;   
+import java.awt.event.*;
+class Result implements ActionListener
+{    
+	JProgressBar bjpbar,congbar,aapbar,bspbar;  
+	JFrame frame;
+	MyPanel panel1;  
+	JPanel panel2;
+	JButton home,logout;
+	JLabel bjp,cong,aap,bsp,win;
+	Font font;
+	int i=0,j=0,k=0,l=0,num=0,res1,res2,res3,res4;
+	int total;     
+	
+	Result()
+	{
+		DemoDB db=new DemoDB();
+		 res1=db.bjpCount();
+		System.out.println("res="+res1);
+		res2=db.congCount();
+		System.out.println("res="+res2);
+		res3=db.aapCount();
+		System.out.println("res="+res3);
+		res4=db.bspCount();
+		System.out.println("res="+res4);
+		total=res1+res2+res3+res4;
+		System.out.println("totalbefore is:"+total);    
+		if(total>2)
+		{
+		System.out.println("totalafter if is:"+total);    
+		frame=new JFrame();
+		panel1=new MyPanel("blue.jpg",600,600);
+		panel2=new JPanel();
+		bjp=new JLabel("BJP");
+		cong=new JLabel("CONGRESS");
+		aap=new JLabel("AAP");
+		bsp=new JLabel("BSP");
+		home=new JButton("GO HOME");
+		logout=new JButton("LOGOUT");
+		bjpbar=new JProgressBar(0,100);    
+		congbar=new JProgressBar(0,100);
+		aapbar=new JProgressBar(0,100);
+		bspbar=new JProgressBar(0,100);	
+			
+		panel1.setLayout(null);
+ 		panel2.setBounds(100,80,450,400);
+		font=new Font("Times New Roman",Font.BOLD,30);
+		bjp.setFont(font);
+		cong.setFont(font);
+		aap.setFont(font);
+		bsp.setFont(font);
+		bjp.setPreferredSize(new Dimension(165,60));
+		cong.setPreferredSize(new Dimension(170,60));
+		aap.setPreferredSize(new Dimension(165,60));
+		bsp.setPreferredSize(new Dimension(165,60));
+		bjpbar.setPreferredSize(new Dimension(250,40));
+		congbar.setPreferredSize(new Dimension(250,40));
+		aapbar.setPreferredSize(new Dimension(250,40));
+		bspbar.setPreferredSize(new Dimension(250,40));
+		home.setPreferredSize(new Dimension(150,40));	
+		logout.setPreferredSize(new Dimension(150,40));
+		home.addActionListener(this);
+		logout.addActionListener(this);
+		bjpbar.setValue(0);   
+		congbar.setValue(0); 
+		aapbar.setValue(0);
+		bspbar.setValue(0);
+		bjpbar.setStringPainted(true);
+		congbar.setStringPainted(true);
+		aapbar.setStringPainted(true); 
+		bspbar.setStringPainted(true);   
+		
+		panel2.add(bjp);
+		panel2.add(bjpbar);
+		panel2.add(cong);
+		panel2.add(congbar);
+		panel2.add(aap);
+		panel2.add(aapbar);
+		panel2.add(bsp);
+		panel2.add(bspbar);
+		panel2.add(home);
+		panel2.add(logout);
+		panel2.setBackground(new Color(63,140,154,140));
+		panel1.add(panel2);
+		frame.add(panel1);    
+		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
+		
+		frame.setSize(600,600);    
+		  frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+		iterate(res1,res2,res3,res4);
+		}
+		else
+		 {
+			System.out.println("result pending!!!");
+			new home1();
+	   		JOptionPane.showMessageDialog(frame,"RESULT PENDING!!!");
+		 }
+		
+		
+		
+	}    
+	
+	public void iterate(int res1,int res2,int res3,int res4)
+	{    	
+		//System.out.println("res:  " +res1+ " res: "+res2+"res:"+res3+"res:"+res4);
+		
+		while(i<=res1)
+		{    
+ 			 bjpbar.setValue(i);    
+			 i++;   
+  			try
+			{
+				Thread.sleep(150);
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}    
+
+			 while(j<=res2)
+			{    
+ 				 congbar.setValue(j);
+ 		 		  j++;    
+  				try
+				{
+					Thread.sleep(150);
+				}
+				catch(Exception e)
+				{
+					System.out.println(e);
+				}    
+			 }    
+			while(k<=res3)
+			{    
+ 				aapbar.setValue(k);
+				k++;    
+  				try
+				{
+					Thread.sleep(150);
+				}
+				catch(Exception e)
+				{
+					System.out.println(e);
+				}    
+		 	}    
+			 while(l<=res4)
+			{    
+ 				bspbar.setValue(l);
+ 		 		l++;    
+  				try
+				{
+					Thread.sleep(150);
+				}
+				catch(Exception e)
+				{
+					System.out.println(e);
+				}    
+			 }    
+		 }    
+		
+		
+		
+	}    
+	public void actionPerformed(ActionEvent e)
+	{
+		if(e.getSource()==home)
+		{
+			frame.dispose();
+			new home1();
+		}
+		if(e.getSource()==logout)
+		{
+			frame.dispose();
+		}
+
+	}
+	
+	/*public static void main(String oo[])
+	{
+		Result m=new Result();
+		m.iterate();
+
+	}*/
+	
+}    
