@@ -1,0 +1,120 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+class home1  implements ActionListener
+{
+	JFrame f;
+	MyPanel p;
+	JPanel p2;
+	JButton b1,b2,b3,b4;
+	JLabel l1,l2;
+	Font font,font1;
+	home1()
+	{
+			
+		f=new JFrame();
+		p=new MyPanel("homeimg.jpg",600,600);
+		p2=new JPanel();
+		l1=new JLabel("WELCOME TO ");
+		l2=new JLabel("NEW VOTING SYSTEM");
+		b1=new JButton("LOGIN");
+		b2=new JButton("REGISTER");
+		b3=new JButton("VIEW RESULT");
+		b4=new JButton("CONTACT");
+		font=new Font("Times New Roman",Font.BOLD,28);
+		font1=new Font("Times New Roman",Font.BOLD,25);
+		f.setLayout(null);
+		p2.setBackground(new Color(63,140,250,140));	
+		b1.setBackground(new Color(63,140,230));	
+		b2.setBackground(new Color(63,140,230));	
+		b3.setBackground(new Color(63,140,230));
+		b4.setBackground(new Color(63,140,230));
+		b1.setBorderPainted(false);	
+		b1.setFocusPainted(false);
+		
+		b2.setBorderPainted(false);	
+		
+		b3.setBorderPainted(false);	
+		
+		b4.setBorderPainted(false);	
+				
+		
+		
+		f.add(p);
+		f.add(p2);
+		p2.add(l1);
+		p2.add(l2);
+		p2.add(b1);
+		p2.add(b2);	
+		p2.add(b3);
+		p2.add(b4);
+		
+				
+
+		
+		l1.setFont(font);
+		l2.setFont(font1);
+		
+		b1.setToolTipText("click to login");
+		
+		b2.setToolTipText("click to register");
+		
+		 b3.setToolTipText("you can view the result here");
+		 b4.setToolTipText("for any queries,contact");
+		 l1.setPreferredSize(new Dimension(230,30));	
+		 l2.setPreferredSize(new Dimension(275,50));	
+		 b1.setPreferredSize(new Dimension(180,50));	
+		 b2.setPreferredSize(new Dimension(180,50));
+		 b3.setPreferredSize(new Dimension(180,50));
+		 b4.setPreferredSize(new Dimension(180,50));
+		
+		b1.addActionListener(this);
+		b2.addActionListener(this);
+		b3.addActionListener(this);
+		b4.addActionListener(this);
+		f.add(p);
+		p.setBounds(0,0,600,600);
+		p2.setBounds(140,100,300,400);
+	
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setResizable(false);
+		f.setSize(600,600);
+		f.setVisible(true);	
+		f.setLocationRelativeTo(null);
+			
+		
+	}	
+			
+		
+	
+	public void actionPerformed(ActionEvent e)
+		{
+			if(e.getSource()==b1)
+			{
+				
+				login1 obj1=new login1();
+				f.dispose();
+			}
+			if(e.getSource()==b2)
+			{
+				register1 obj2=new register1();
+				f.dispose();	
+			}
+			if(e.getSource()==b3)
+			{
+				new Result();	
+			}
+			/*if(e.getSource()==b4)
+			{
+				//contact1 obj4=new contact1();
+				f.dispose();	
+			}*/
+		}
+		public static void main(String oo[])
+		{
+			new home1();
+			
+		}
+
+
+}
